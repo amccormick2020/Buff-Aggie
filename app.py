@@ -3,7 +3,7 @@ from langchain_core.messages import HumanMessage
 from langchain_core.output_parsers import JsonOutputParser
 
 from basic_flow import app, config
-
+from pprint import pformat
 
 # Streamlit app title
 st.title("Workout Plan Recommender")
@@ -21,18 +21,17 @@ if st.button("Submit"):
         # Prepare input for the chatbot
         input_message = [HumanMessage(content=user_input)]
         
-
         try:
             # Invoke the chatbot logic
-            for input_m in input_message:
-                output = app.invoke({"messages":input_m},config=config)
-                output["messages"][-1].pretty_print()
-           
-            workout_plan = output["messages"][-1].content  # Extract the chatbot's response
+            # for input_m in input_message:
+            output = app.invoke({"messages": input_message}, config=config)
+                # Extract the workout plan from the output
+            workout_plan = output.get("workout_plan", {})
+            # response = pformat(workout_plan)  # Format the workout plan for display
 
             # Display the response
             st.subheader("Workout Plan")
-            st.json(workout_plan)  # Display the JSON response in a readable format
+            st.json(workout_plan)  # Display the formatted workout plan
         except Exception as e:
             st.error(f"An error occurred: {e}")
     else:
