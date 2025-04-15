@@ -99,6 +99,7 @@ class Intent(BaseModel):
     intent: Literal["workout", "avoid_workout"] = Field(..., description="Classify the user query as a good workout query or asking for a workout that is opposite of another / avoids a body part.")
 
 #groq_api_key = os.getenv("GROQ_API_KEY", "NO_KEY_FOUND")
+groq_api_key = st.secrets["groq_api_key"]  # Use Streamlit secrets management
 llm = ChatGroq(groq_api_key=groq_api_key, model_name="Llama-3.3-70b-Versatile")
 
 intent_prompt = ChatPromptTemplate.from_messages([
