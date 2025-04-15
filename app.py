@@ -120,7 +120,8 @@ def transform_query(state):
         transformed_query = llm.invoke(
             [HumanMessage(content=f"""Given the query '{query}', suggest a workout-related query that avoids the injured body part or focuses on alternative exercises. These queries must be concise, maximum of 10 words and use opposite body part keywords and not include the names of the body parts the user wants to avoid
     Examples: If Given 'I injured my arms, give me exercises', return 'Give me Quadriceps, Abdominals, Hamstrings, or Calves exercises.'
-    Examples: If Given 'Give me alternates to lower body', return 'Give me Quadriceps, Shoulders, Lats, Biceps, Forearms, or other upper body exercises.'""")]
+    Examples: If Given 'Give me alternates to lower body', return 'Give me Quadriceps, Shoulders, Lats, Biceps, Forearms, or other upper body exercises.'
+    Examples: If Given 'only legs', return 'Calves, Glutes, Hamstrings, Legs.'""")]
         )
         print("Transformed query:", transformed_query.content)
         return {"query": transformed_query.content}  # Extract the content from the response
@@ -207,8 +208,8 @@ if st.button("Recommend Exercises"):
         st.warning("Please enter a workout goal.")
     else:
         user_pref = get_user_preferences(st.session_state['username'])
-        full_query = f"{user_pref} {query}" if user_pref else query
-
+        full_query = query if "only" in query.lower() else f"{user_pref} {query}" if user_pref else query
+        print("full query: " + full_query)
         state = {"query": full_query, "df": df, "model": model}
         result_state = workflow.compile().invoke(state)
         results = result_state["results"]
