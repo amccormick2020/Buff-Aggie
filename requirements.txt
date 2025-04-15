@@ -1,0 +1,10 @@
+pandas
+numpy
+sentence-transformers
+scikit-learn
+langgraph
+langchain_core
+langchain_groq
+pydantic
+python-dotenv
+typing_extensions
