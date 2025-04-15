@@ -108,7 +108,7 @@ workout_retriever = astra_vector_store.as_retriever(
                                                 search_type="similarity_score_threshold",
                                                 search_kwargs={"k": 2, "score_threshold": 0.8},
                                                 )   
-workout_retriever.invoke("Give me an upper body workout")
+# workout_retriever.invoke("Give me an upper body workout")
 
 
 # # Langgraph
@@ -261,7 +261,7 @@ The user's preferences are : {preferences}
 
 You are to take reference from the documents provided below : {documents}
 
-You are to generate a workout plan for a day include 3 exercises. The workout plan should be a JSON in the following format:
+You are to generate a workout plan for a day include a variable number of exercises specified by the user. The workout plan should be a JSON in the following format:
 
 "Incline bench press" : ["The incline bench press is a popular barbell exercise targeting the chest muscles, particularly the ...","Chest","Barbell"],
 "Spoto press" : ["The Spoto press is a variation of the popular barbell exercise the bench press that builds strength ...","Chest","Barbell"],
@@ -287,8 +287,8 @@ generate_workout_plan_prompt = ChatPromptTemplate.from_messages(
 generate_workout_plan = generate_workout_plan_prompt | llm | JsonOutputParser()
 
 #temp_mp = generate_workout_plan.invoke({"preferences": "I hate workouts", "BodyPart": "Chest", "documents": temp_docs})
-temp_mp = generate_workout_plan.invoke({"preferences": "I prefer workouts with unusual names", "documents": temp_docs})
-print(temp_mp)
+#temp_mp = generate_workout_plan.invoke({"preferences": "I prefer workouts with unusual names", "documents": temp_docs})
+#print(temp_mp)
 
 # print(output_json)
 
@@ -658,14 +658,14 @@ app = workflow.compile(checkpointer = memory)
 # In[70]:
 
 
-from IPython.display import Image, display
+#from IPython.display import Image, display
 
-try:
-    display(Image(app.get_graph().draw_mermaid_png()))
-except Exception:
+#try:
+#    display(Image(app.get_graph().draw_mermaid_png()))
+#except Exception:
     # This requires some extra dependencies and is optional
-    print("ERROR :(")
-    pass
+#    print("ERROR :(")
+#    pass
 
 
 # ### Chat and testing
@@ -691,11 +691,11 @@ config = {"configurable": {"thread_id": "1"}}
 #                  HumanMessage(content="Help me create a workout plan for the week"),
 #                  HumanMessage(content="What is the capital of France")]
 
-input_message = [HumanMessage(content="Give me a workout plan for upper body workouts"),]
+#input_message = [HumanMessage(content="Give me a workout plan for upper body workouts"),]
 
-for input_m in input_message:
-    output = app.invoke({"messages":input_m},config=config)
-    output["messages"][-1].pretty_print()
+#for input_m in input_message:
+#    output = app.invoke({"messages":input_m},config=config)
+#    output["messages"][-1].pretty_print()
 
 
 # In[ ]:
