@@ -12,9 +12,9 @@ from typing import Literal
 from typing_extensions import TypedDict
 import sqlite3
 import os
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 
-load_dotenv()
+#load_dotenv()
 
 # --- Database Setup ---
 def init_db():
@@ -98,7 +98,7 @@ class Intent(BaseModel):
     """Classify user intent."""
     intent: Literal["workout", "avoid_workout"] = Field(..., description="Classify the user query as a good workout query or asking for a workout that is opposite of another / avoids a body part.")
 
-groq_api_key = os.getenv("GROQ_API_KEY", "NO_KEY_FOUND")
+#groq_api_key = os.getenv("GROQ_API_KEY", "NO_KEY_FOUND")
 llm = ChatGroq(groq_api_key=groq_api_key, model_name="Llama-3.3-70b-Versatile")
 
 intent_prompt = ChatPromptTemplate.from_messages([
