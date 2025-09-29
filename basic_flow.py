@@ -192,10 +192,6 @@ route_prompt = ChatPromptTemplate.from_messages(
 
 general_router = route_prompt | structured_llm_general_router
 
-# print(general_router.invoke({"messages": "what is stardew Valley"}))
-# print(general_router.invoke({"messages": "How to make a sweet dessert"}))
-
-
 # In[49]:
 
 
@@ -216,7 +212,6 @@ route_prompt = ChatPromptTemplate.from_messages(
 
 tool_router = route_prompt | structured_llm_tool_router
 
-# print(tool_router.invoke({"messages": "how to make butter chicken"}))
 # print(tool_router.invoke({"messages": "help me plan the workout for the week"}))
 
 
@@ -608,12 +603,9 @@ workflow.add_node("tool_router", workout)
 workflow.add_node("retrieve_exercises", retrieve_exercises)
 workflow.add_node("workout_plan_retriever", workout_plan_retriever)
 workflow.add_node("generate_workout_plan", workout_plan_generator)
-#workflow.add_node("check_workout_plan", workout_plan_checker)
-# workflow.add_node("redo_workout_plan_router", redo_workout_plan)
 workflow.add_node("display_workout_plan", display_workout_plan)
 workflow.add_node("generate_exercise", exercise_generator)
 
-# workflow.add_edge(START, "trim")
 workflow.add_edge(START,"create_user")
 workflow.add_edge("create_user","trim")
 workflow.add_edge("trim", "general_router")
@@ -634,22 +626,12 @@ workflow.add_conditional_edges(
     },
 )
 workflow.add_edge("workout_plan_retriever", "generate_workout_plan")
-#workflow.add_edge("generate_workout_plan", "check_workout_plan")
 workflow.add_edge("generate_workout_plan", "display_workout_plan")
 
-#workflow.add_conditional_edges(
-#    "check_workout_plan",
-#    redo_workout_plan,
-#    {
-#        "redo_workout_plan": "generate_workout_plan",
-#        "continue": "display_workout_plan",
-#    },
-#)
 workflow.add_edge("display_workout_plan", END)
 workflow.add_edge("general_chat_bot", END)
 workflow.add_edge("retrieve_exercises", "generate_exercise")
 workflow.add_edge("generate_exercise", END)
-# workflow.add_edge("workout_plan", END)
 
 memory = MemorySaver()
 app = workflow.compile(checkpointer = memory)
@@ -678,28 +660,6 @@ config = {"configurable": {"thread_id": "1"}}
 
 # In[72]:
 
-
-#input_message = [HumanMessage(content="What rank is Tri the Tree?")]
-#output = app.invoke({"messages":input_message},config=config)
-#output["messages"][-1].pretty_print()
-
-
 # In[73]:
 
-
-# input_message = [HumanMessage(content="How to make butter chicken"),
-#                  HumanMessage(content="Help me create a workout plan for the week"),
-#                  HumanMessage(content="What is the capital of France")]
-
-#input_message = [HumanMessage(content="Give me a workout plan for upper body workouts"),]
-
-#for input_m in input_message:
-#    output = app.invoke({"messages":input_m},config=config)
-#    output["messages"][-1].pretty_print()
-
-
 # In[ ]:
-
-
-
-
