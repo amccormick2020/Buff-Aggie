@@ -1,4 +1,6 @@
 # Aggie workout plan generator and exercise recommender
+<img width="1917" height="871" alt="buffAggieThumbnail" src="https://github.com/user-attachments/assets/e19f12e1-e9c1-436b-89a5-b870cb5ec04e" />
+
 # Link to Web App Deployment Below
 https://csce670.streamlit.app/
 
